@@ -15,7 +15,7 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public Product getproduct(int productId) {
+    public FakeStoreProductResponseDTO getproduct(int productId) {
         return null;
     }
 

@@ -3,6 +3,7 @@ package com.example.EcomProductService.service;
 import com.example.EcomProductService.Client.FakeStoreClient;
 import com.example.EcomProductService.dto.FakeStoreProductResponseDTO;
 import com.example.EcomProductService.entity.Product;
+import com.example.EcomProductService.exception.ProductNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Primary;
@@ -24,8 +25,12 @@ public class FakeStoreProductServiceImpl implements ProductService{
     }
 
     @Override
-    public Product getproduct(int productId) {
-        return null;
+    public FakeStoreProductResponseDTO getproduct(int productId) throws ProductNotFoundException {
+        FakeStoreProductResponseDTO responseDTO = fakeStoreClient.getProductById(productId).getBody();
+        if(responseDTO == null){
+            throw new ProductNotFoundException("product not found with id" + productId);
+        }
+        return responseDTO;
     }
 
     @Override
