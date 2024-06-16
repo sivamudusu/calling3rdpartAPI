@@ -1,5 +1,6 @@
 package com.example.EcomProductService.Client;
 
+import com.example.EcomProductService.dto.FakeStoreCartResponseDTO;
 import com.example.EcomProductService.dto.FakeStoreProductResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,6 +19,8 @@ public class FakeStoreClient {
     private String fakeStoreApiBaseURL;
     @Value("${fakestore.api.product.path}")
     private String fakeStoreApiProductPath;
+    @Value("${fakestore.api.carts.path}")
+    private String getFakeStoreApiCartPath;
 
     public List<FakeStoreProductResponseDTO> getAllProducts(){
         String fakeStoreGetAllProductsURl = fakeStoreApiBaseURL .concat(fakeStoreApiProductPath);
@@ -31,6 +34,20 @@ public class FakeStoreClient {
         RestTemplate restTemplate = restTemplateBuilder.build();
         ResponseEntity<FakeStoreProductResponseDTO> productResponse = restTemplate.getForEntity(fakeStoreGetProductByidURL, FakeStoreProductResponseDTO.class);
         return productResponse;
+    }
+
+    public List<FakeStoreCartResponseDTO>getAllCarts(){
+        String fakeStoreGetAllCartsURL = fakeStoreApiBaseURL.concat(getFakeStoreApiCartPath);
+        RestTemplate restTemplate = restTemplateBuilder.build();
+        ResponseEntity<FakeStoreCartResponseDTO[]>cartResponseList = restTemplate.getForEntity(fakeStoreGetAllCartsURL, FakeStoreCartResponseDTO[].class);
+        return List.of(cartResponseList.getBody());
+    }
+
+    public FakeStoreCartResponseDTO getcartById(int cartId){
+        String fakeStoreGetAllCartsURL = fakeStoreApiBaseURL.concat(getFakeStoreApiCartPath+"/"+cartId);
+        RestTemplate restTemplate = restTemplateBuilder.build();
+        ResponseEntity<FakeStoreCartResponseDTO>cartResponseList = restTemplate.getForEntity(fakeStoreGetAllCartsURL, FakeStoreCartResponseDTO.class);
+        return cartResponseList.getBody();
     }
 
 

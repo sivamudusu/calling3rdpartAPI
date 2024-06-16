@@ -17,4 +17,10 @@ public class ProductServiceExceptionHandler {
         );
         return new ResponseEntity<>(exceptionResponseDTO , HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(CartNotFoundException.class)
+    public ResponseEntity handleCartNotFoundException(CartNotFoundException ce){
+        ExceptionResponseDTO exceptionResponseDTO = new ExceptionResponseDTO(ce.getMessage() , 404);
+        return new ResponseEntity(exceptionResponseDTO , HttpStatus.NOT_FOUND);
+    }
 }
