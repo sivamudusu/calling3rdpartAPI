@@ -1,18 +1,18 @@
 package com.example.EcomProductService.dto;
 
-import com.example.EcomProductService.entity.Category;
+
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.UUID;
+
 @Getter
 @Setter
-public class ProductResponseDTO {
-    private int productId;
+public class ProductCreationDto {
     private String title;
     private double price;
     private String description;
-    private String category;
     private String imgURL;
     private double rating;
-
+    private UUID categoryId;
 }
