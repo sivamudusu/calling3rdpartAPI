@@ -52,7 +52,14 @@ public class CategoryServiceImpl implements CategoryService{
 
     @Override
     public CategoryResponseDTO updateCategory(CategoryCreationDTO categoryCreationDTO, UUID uuid) {
-        return null;
+        Category category = categoryRepository.findById(uuid).orElseThrow(
+                ()-> new CategoryNotFoundException("category not found with given id :"+uuid)
+        );
+
+        category.setName(categoryCreationDTO.getCategoryName());
+        CategoryResponseDTO categoryResponseDTO = CategoryEntityDTOMapper.categoryEntityToDTOConverter(category);
+        return categoryResponseDTO;
+
     }
 
     @Override
